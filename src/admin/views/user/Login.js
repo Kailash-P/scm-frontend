@@ -1,21 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../../baseComponents/css/loginStyle.css";
 import { Redirect } from "react-router-dom";
 import {
-  signIn,
-  isAuthenticated,
-  authenticate,
+  isAuthenticated
 } from "../../helper/user/userApiHelper";
 import { Spinner } from "react-bootstrap";
 import { info } from "@pnotify/core";
 import "@pnotify/core/dist/PNotify.css";
 import "@pnotify/core/dist/BrightTheme.css";
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { signInAction } from '../../../actions/authenticationActionTypes';
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { signInAction } from "../../../actions/authenticationActionTypes";
 
 const SignIn = () => {
   const dispatch = useDispatch();
-  const loggedInUser = useSelector(state => state.authenticationReducer.response, shallowEqual);
+  const loggedInUser = useSelector(
+    (state) => state.authenticationReducer.response,
+    shallowEqual
+  );
 
   const [users, setUsers] = useState({
     email: "",
@@ -26,6 +27,18 @@ const SignIn = () => {
 
   const { email, password, loading, allowRedirect } = users;
   const authenticatedUser = isAuthenticated();
+
+  useEffect(() => {
+    if (loggedInUser && loggedInUser.Message) {
+      debugger
+      info({
+        title: loggedInUser.Message,
+        delay: 2000,
+        icon: "fa fa-user",
+        text: "Invalid credentials.",
+      });
+    }
+  }, [loggedInUser]);
 
   // this syntax is called event handler functions in javascript
   const handleChange = (property) => (event) => {
@@ -84,14 +97,8 @@ const SignIn = () => {
     }
 
     if (email !== "" && password !== "") {
-
-     
       const data = { email, password };
       dispatch(signInAction(data));
-      
-      if(loggedInUser){
-        console.log(loggedInUser);
-      }
 
       // call the signup method written in the auth/helper and pass the params to it.
       // signIn({ email, password })

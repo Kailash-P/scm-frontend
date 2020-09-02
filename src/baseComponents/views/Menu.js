@@ -94,11 +94,9 @@ const Menu = () => {
                 </Navbar.Text>
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#!">
-                <a href="#!" onClick={signOut}>
+              <a href="#!" className="dropdown-item" onClick={signOut}>
                   <i className="fa fa-sign-out"></i> SignOut
                 </a>
-              </NavDropdown.Item>
             </NavDropdown>
           </Navbar.Collapse>
         </div>
