@@ -5,9 +5,7 @@ import * as actionTypes from '../actions/actionTypes';
 export function* signInSaga(payload){
     try {
         const response = yield call(signIn, payload.user);
-        yield [
-            put({type: actionTypes.SIGN_IN_USER_SUCCESS, response})
-        ];
+        yield put({type: actionTypes.SIGN_IN_USER_SUCCESS, response});
     } catch (error) {
         yield put({type: actionTypes.SIGN_IN_USER_ERROR, error});
     }

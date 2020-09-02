@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../../../baseComponents/css/loginStyle.css";
 import { Redirect } from "react-router-dom";
 import {
@@ -16,11 +16,7 @@ import { signInAction } from '../../../actions/authenticationActionTypes';
 const SignIn = () => {
   const dispatch = useDispatch();
 
-  const loggedInUser = null;
-
-  useEffect(() => { 
-    // do stuff     
- }, [loggedInUser]);
+  const loggedInUser = useSelector(signInAction, shallowEqual);
 
   const [users, setUsers] = useState({
     email: "",
@@ -210,6 +206,4 @@ const SignIn = () => {
   );
 };
 
-const mapStateToProps = (response) => ({loggedInUser : response});
-
-export default connect(mapStateToProps)(SignIn);
+export default SignIn;
