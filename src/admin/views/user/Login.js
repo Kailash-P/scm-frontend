@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../../baseComponents/css/loginStyle.css";
 import { Redirect } from "react-router-dom";
 import {
@@ -7,11 +7,21 @@ import {
   authenticate,
 } from "../../helper/user/userApiHelper";
 import { Spinner } from "react-bootstrap";
-import { notice } from "@pnotify/core";
+import { info } from "@pnotify/core";
 import "@pnotify/core/dist/PNotify.css";
 import "@pnotify/core/dist/BrightTheme.css";
+import { useDispatch, connect, useSelector, shallowEqual } from 'react-redux';
+import { signInAction } from '../../../actions/authenticationActionTypes';
 
 const SignIn = () => {
+  const dispatch = useDispatch();
+
+  const loggedInUser = null;
+
+  useEffect(() => { 
+    // do stuff     
+ }, [loggedInUser]);
+
   const [users, setUsers] = useState({
     email: "",
     password: "",
@@ -61,7 +71,7 @@ const SignIn = () => {
     setUsers({ ...users });
 
     if (!email) {
-      notice({
+      info({
         title: "Sign In",
         delay: 2000,
         icon: "fa fa-envelope",
@@ -69,7 +79,7 @@ const SignIn = () => {
       });
       return false;
     } else if (!password) {
-      notice({
+      info({
         title: "Sign In",
         delay: 2000,
         icon: "fa fa-key",
@@ -79,32 +89,41 @@ const SignIn = () => {
     }
 
     if (email !== "" && password !== "") {
+
+     
+      const data = { email, password };
+      dispatch(signInAction(data));
+      debugger
+      if(loggedInUser){
+        console.log(loggedInUser);
+      }
+
       // call the signup method written in the auth/helper and pass the params to it.
-      signIn({ email, password })
-        .then((data) => {
-          if (data.Message) {
-            setUsers({ ...users, loading: false });
-            notice({
-              title: data.Message,
-              delay: 2000,
-              icon: "fa fa-user",
-              text: "Invalid credentials.",
-            });
-          } else {
-            authenticate(data, () => {
-              setUsers({
-                ...users,
-                email: "",
-                password: "",
-                loading: true,
-                allowRedirect: true,
-              });
-            });
-          }
-        })
-        .catch((err) => {
-          console.log("Sign in failed.");
-        });
+      // signIn({ email, password })
+      //   .then((data) => {
+      //     if (data.Message) {
+      //       setUsers({ ...users, loading: false });
+      //       info({
+      //         title: data.Message,
+      //         delay: 2000,
+      //         icon: "fa fa-user",
+      //         text: "Invalid credentials.",
+      //       });
+      //     } else {
+      //       authenticate(data, () => {
+      //         setUsers({
+      //           ...users,
+      //           email: "",
+      //           password: "",
+      //           loading: true,
+      //           allowRedirect: true,
+      //         });
+      //       });
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     console.log("Sign in failed.");
+      //   });
     }
   };
 
@@ -191,4 +210,6 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+const mapStateToProps = (response) => ({loggedInUser : response});
+
+export default connect(mapStateToProps)(SignIn);

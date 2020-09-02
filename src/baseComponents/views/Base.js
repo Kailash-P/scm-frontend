@@ -1,6 +1,8 @@
 import React from "react";
 import Menu from "./Menu";
 import "../../baseComponents/css/baseStyle.css";
+import { isAuthenticated } from "../../admin/helper/user/userApiHelper";
+import UserMenu from "./UserMenu";
 
 const Base = ({
   title = "",
@@ -10,7 +12,11 @@ const Base = ({
 }) => {
   return (
     <>
-      <Menu />
+      {isAuthenticated() && isAuthenticated().user.is_admin === true ? (
+        <Menu />
+      ) : (
+        <UserMenu />
+      )}
       <div className="baseBody">
         <div className="container-fluid">
           <h2 className="display-4">{title}</h2>

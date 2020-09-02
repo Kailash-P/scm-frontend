@@ -4,9 +4,9 @@ import Base from "./Base";
 const Home = () => {
   return (
     <>
-      <Base title="Home" description="" childDivClassName="">
+      <Base title="~" description="" childDivClassName="">
         <div className="container">
-            <h1 className='text-center text-white'>Welcome</h1>
+            {/* <h1 className='text-center text-dark'>Welcome</h1> */}
         </div>
       </Base>
     </>

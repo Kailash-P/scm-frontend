@@ -23,8 +23,11 @@ export const signIn = user => {
         },
         body: JSON.stringify(user)
     }).then(response => {
+        debugger
         return response.json();
-    })
+    }).then(json => {
+        return json;
+      })
     .catch(err => console.log(err));
 }
 

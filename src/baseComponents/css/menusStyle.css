@@ -7,10 +7,10 @@
 .card {
   margin-bottom: 15px;
   border-radius: 0;
-  box-shadow: rgba(0, 0, 0, 0.5);
+  box-shadow: rgba(0, 0, 0, 0.1);
 }
 .header-top {
-  box-shadow:  rgba(0, 0, 0, 0.5);
+  box-shadow:  rgba(0, 0, 0, 0.1);
 }
 .leftmenutrigger {
   display: none;
@@ -29,7 +29,7 @@
     left: 0;
   }
   .navbar-nav.side-nav {
-    box-shadow:  rgba(0, 0, 0, 0.5);
+    box-shadow:  rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 56px;
     flex-direction: column !important;
@@ -68,5 +68,4 @@
 
 a, a:link {
   text-decoration: none;
-  color:cyan;
 }

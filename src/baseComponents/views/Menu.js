@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../css/menusStyle.css";
-import { Navbar, Nav } from "react-bootstrap";
-import { signOut } from "../../admin/helper/user/userApiHelper";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { signOut, isAuthenticated } from "../../admin/helper/user/userApiHelper";
 
 const Menu = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -13,17 +13,6 @@ const Menu = () => {
   return (
     <>
       <Navbar bg="dark" variant="dark" fixed="top" className="navBarHeader">
-        {/* <Navbar.Brand href="#!">
-          <img
-            alt=""
-            src="../../cloudvillehomepage.png"
-            width="30"
-            height="30"
-            className="d-inline-block"
-            onClick={changeSideNavToggle}
-          />{" "}
-          SCM
-        </Navbar.Brand> */}
         <div className="hamContainer" onClick={changeSideNavToggle}>
           <div className="bar1"></div>
           <div className="bar2"></div>
@@ -95,10 +84,22 @@ const Menu = () => {
               <i className="fa fa-users"></i> &nbsp;Contact Management
             </Nav.Link>
           </ul>
+          <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
-            <a href="#!" onClick={signOut}>
-              <i className="fa fa-power-off"></i> &nbsp;Sign Out
-            </a>
+          <NavDropdown title="" className="dropleft">
+              <NavDropdown.Item href="#!">
+                <Navbar.Text className="text-dark">
+                  Signed in as:{" "}
+                  <b>{isAuthenticated() && isAuthenticated().user.first_name}</b>
+                </Navbar.Text>
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#!">
+                <a href="#!" onClick={signOut}>
+                  <i className="fa fa-sign-out"></i> SignOut
+                </a>
+              </NavDropdown.Item>
+            </NavDropdown>
           </Navbar.Collapse>
         </div>
       </Navbar>
