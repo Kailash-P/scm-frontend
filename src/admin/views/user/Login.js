@@ -10,13 +10,12 @@ import { Spinner } from "react-bootstrap";
 import { info } from "@pnotify/core";
 import "@pnotify/core/dist/PNotify.css";
 import "@pnotify/core/dist/BrightTheme.css";
-import { useDispatch, connect, useSelector, shallowEqual } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { signInAction } from '../../../actions/authenticationActionTypes';
 
 const SignIn = () => {
   const dispatch = useDispatch();
-
-  const loggedInUser = useSelector(signInAction, shallowEqual);
+  const loggedInUser = useSelector(state => state.authenticationReducer.response, shallowEqual);
 
   const [users, setUsers] = useState({
     email: "",
@@ -89,7 +88,7 @@ const SignIn = () => {
      
       const data = { email, password };
       dispatch(signInAction(data));
-      debugger
+      
       if(loggedInUser){
         console.log(loggedInUser);
       }
